@@ -1,59 +1,53 @@
 <div align="center">
 
-# XENOS-FCA
+# ⚡ XENOS-FCA ⚡
+### 🌌 THE NEXT GENERATION FACEBOOK CHAT API 🌌
 
-**The most advanced & reliable Facebook Messenger API for Node.js**  
-Build powerful, real-time Messenger bots with enterprise-grade stability & rich features.
+<p align="center">
+  <img src="https://img.shields.io/badge/VERSION-2.0.0-blueviolet?style=for-the-badge&logo=messenger&logoColor=white" alt="Version">
+  <img src="https://img.shields.io/badge/LICENSE-MIT-00FFAA?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/PLATFORM-NODE.JS-FF0055?style=for-the-badge&logo=node.js&logoColor=white" alt="NodeJS">
+</p>
 
-<br>
+---
 
+### ◈ ─╼『 PROJECT OVERVIEW 』╾─ ◈
+**XENOS-FCA** is a high-performance, industrial-grade Facebook Messenger API wrapper built for speed, stability, and futuristic automation. Engineered with a focus on real-time efficiency and developer-centric flexibility.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+---
 
-<br>
-
-</div>
-
-<div align="center">
+### ❖ ─╼『 CORE ARCHITECTURE 』╾─ ◈
   
-## ✨ Why XENOS-FCA?
+✧ **⟨⚡⟩ REAL-TIME MQTT CORE** — Sub-millisecond message delivery and event handling.  
+✧ **⟨🛡️⟩ AUTO-EVOLUTION** — Smart session validation and exponential backoff recovery.  
+✧ **⟨🔗⟩ WEBHOOK PROTOCOL** — Seamless integration with external services and monitoring.  
+✧ **⟨🧩⟩ QUANTUM PLUGINS** — Highly modular architecture for infinite extensibility.  
+✧ **⟨🌐⟩ PROXY TUNNELING** — Native support for HTTP, HTTPS, and SOCKS protocols.
 
-Modern • Fast • Reliable • Feature-rich
+---
 
-- Real-time messaging via **MQTT**
-- Full support for **attachments, reactions, edits, mentions**
-- Smart **auto-reconnect**, **proxy support**, **exponential backoff**
-- Beautiful **plugin & middleware system**
-- Webhook forwarding, custom logging, performance monitoring
-- Thread customization, admin tools, story & comment interactions
-
-<br>
-</div>
-
-<div align="center">
-
-## 🚀 Quick Start in 60 seconds
-
-1. **Install**
+### 🚀 ─╼『 NEURAL INSTALLATION 』╾─ ◈
 
 ```bash
+# Initialize via Node Package Manager
 npm install xenos-fca
-# or
+
+# Deploy via Bun Runtime
 bun add xenos-fca
-# or
+
+# Sync via PNPM
 pnpm add xenos-fca
 ```
 
-### *Export Facebook cookies*
+---
 
-**Use “EditThisCookie” or “Cookie-Editor”**
-**export as JSON → save as appstate.json**
+### 💻 ─╼『 INITIALIZATION SEQUENCE 』╾─ ◈
 
-**Minimal bot example**
-```
+```javascript
 import fs from 'fs';
 import { login } from 'xenos-fca';
 
+// Load encrypted session data
 const appState = JSON.parse(fs.readFileSync('appstate.json', 'utf8'));
 
 login({ appState }, {
@@ -62,184 +56,61 @@ login({ appState }, {
   autoMarkRead: true,
   selfListen: false
 }, (err, api) => {
-  if (err) return console.error('Login failed →', err);
+  if (err) return console.error('⟪ ERROR ⟫ Connection sequence failed:', err);
 
-  console.log('🚀 XENOS-FCA is online!');
+  console.log('✨ ⟦ XENOS-FCA ONLINE ⟧ ✨');
 
   api.listenMqtt((err, event) => {
     if (err) return;
 
     if (event.type === 'message' && event.body?.trim()) {
-      console.log(`[${event.senderID}] → ${event.body}`);
+      console.log(`⟨${event.senderID}⟩ » ${event.body}`);
 
       if (event.body.toLowerCase() === '/ping') {
-        api.sendMessage('🏓 Pong!', event.threadID);
+        api.sendMessage('🏓 ⟦ PONG ⟧', event.threadID);
       }
     }
   });
 });
-
 ```
+
 ---
 
-# 🌟 Feature Overview
+### 🛠️ ─╼『 SYSTEM CAPABILITIES 』╾─ ◈
 
-**📨 Messaging Core**
+| ◈ MODULE ◈ | ✧ FEATURES ✧ |
+| :--- | :--- |
+| **📨 MESSAGING** | Reactions • Edits • Mentions • Rich Media • Stickers |
+| **🧵 THREADS** | Group Admin Tools • Custom Themes • Pinning • Muting |
+| **🔌 ENGINE** | Middleware Chain • Performance Metrics • Custom Logging |
+| **👥 SOCIAL** | Story Interactions • Post Comments • Friend Management |
 
-- ### Real-time send/receive (MQTT)
-- ### Edit sent messages
-- ### Add/remove reactions
-- ### Typing indicators
-- ### Location sharing
-- ### Rich mentions (@user)
-- ### Images, videos, audio, stickers, files
+---
 
-______
+### 💠 ─╼『 COSMIC CONFIGURATION 』╾─ ◈
 
-**🧵 Thread & Group Controls**
-
-- ### Thread info & participant list
-- ### Message history
-- ### Pin important messages
-- ### Change group name, emoji, theme
-- ### Add/remove members & admins
-- ### Mute / unmute notifications
-____
-
-**⚡ Performance & Reliability**
-
-- ### Smart caching layer
-- ### Request debouncing
-- ### Connection health monitoring
-- ### Exponential backoff reconnect
-- ### Auto session validation
-- ### Proxy (HTTP/HTTPS/SOCKS) support
-- ### Detailed performance metrics
-____
-
-**🔌 Extensibility**
-
-- ### Powerful plugin system
-- ### Middleware chain
-- ### External webhook forwarding
-- ### Advanced configurable logging
-- ### Custom event filtering
-
-____
-
-**👥 Social & Discovery Features**
-
-- ### Detailed user profiles
-- ### Reply & react to Stories
-- ### Comment on posts
-- ### Share content to timeline
-- ### Send / manage friend requests
-- ### Follow / unfollow users
-
-____
-
-## 🛠️ Configuration (most used options)
-```
-login({ appState }, {
-login({ appState }, {
-  // Connection behavior
-  online: true,
-  selfListen: false,
-  listenEvents: true,
-  autoMarkRead: true,
-  autoReconnect: true,
-
-  // Proxy (optional)
-  proxy: 'http://user:pass@1.2.3.4:8080',
-
-  // Webhook (optional)
-  webhook: {
-    enabled: true,
-    url: 'https://your-server.com/events',
-    events: ['message', 'reaction', 'event'],
-    secret: 'my-very-secret-key'
-  },
-
-  // Logging
-  logger: customLoggerInstance
-}, callback);
-
-```
-___
-
-## 📚 Popular Snippets
-
-### 🪝 Webhook forwarding
-```
-webhook: {
-  enabled: true,
-  url: 'https://your.app/webhook',
-  events: ['message', 'reaction', 'typ', 'read_receipt'],
-  secret: process.env.WEBHOOK_SECRET
-}
-```
-
-### 📊 Custom colored & file logging
-```
-import { Logger } from 'xenos-fca';
-
+```javascript
 const logger = new Logger({
   level: 'debug',
   enableFile: true,
-  logFilePath: './logs/bot-2026.log',
+  logFilePath: './logs/xenos-fca.log',
   colorize: true,
   timestamp: true
 });
 
-login({ appState }, { logger }, ...);
+// Register custom command protocols
+api.plugins.register('neural-commands', commandModule);
 ```
 
-### 🔌 Simple command plugin
-```
-const commandPlugin = {
-  name: 'commands',
-  commands: new Map(),
-  addCommand(name, fn) { this.commands.set(name, fn); },
-  async execute(message) {
-    if (!message.body?.startsWith('/')) return;
-    const [cmd, ...args] = message.body.slice(1).split(' ');
-    const handler = this.commands.get(cmd);
-    if (handler) await handler({ api, message, args });
-  }
-};
-
-api.plugins.register('commands', commandPlugin);
-
-commandPlugin.addCommand('help', ({ api, message }) => {
-  api.sendMessage('Commands: /ping, /help, /info', message.threadID);
-});
-
-```
-
-
-## 📖 Important API Methods
-```
-api.sendMessage("Hello world", threadID);
-api.sendMessage({ body: "Image + text", attachment: fs.createReadStream("cat.jpg") }, threadID);
-
-api.getThreadInfo(threadID, (err, info) => { ... });
-api.getUserInfo(userID, (err, user) => { ... });
-
-api.listenMqtt((err, event) => { ... });
-```
-
-</div>
-
-___
+---
 
 <div align="center">
-  <br>
-  
-##  📦 Made with ❤️ by XENOS
-###  GitHub: @LordXenos
-###  Repository: Xenos-Fca
-###  Give it a ⭐ if it helps your project!
-## MIT License © 2026 XENOS
 
-<br>
+### ◈ ─╼『 DEVELOPED BY XENOS 』╾─ ◈
+**GITHUB: [@LordXenos](https://github.com/LordXenos)**  
+**REPO: [Xenos-Fca](https://github.com/LordXenos/XENOS-FCA)**
+
+### ✧ ⟨ GIVE A ⭐ IF YOU LIKE THIS UNIVERSE ⟩ ✧
+#### MIT LICENSE © 2026 ◈ XENOS
+
 </div>
