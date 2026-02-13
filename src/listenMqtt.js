@@ -219,7 +219,7 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
           fmtMsg = utils.formatDeltaMessage(v);
         } catch (err) {
           return globalCallback({
-            error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+            error: "Problem parsing message object. Please open an issue at https://github.com/LordXenos/XENOS-FCA/issues.",
             detail: err,
             res: v,
             type: "parse_error"
@@ -442,7 +442,7 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
             fmtMsg = utils.formatDeltaEvent(v.delta);
           } catch (err) {
             return globalCallback({
-              error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+              error: "Problem parsing message object. Please open an issue at https://github.com/LordXenos/XENOS-FCA/issues.",
               detail: err,
               res: v.delta,
               type: "parse_error"
