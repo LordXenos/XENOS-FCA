@@ -1,7 +1,7 @@
 "use strict";
 
 var utils = require("./utils");
-// @NethWs3Dev
+// @MaybeXenos
 /**
  * It posts an image to a Facebook profile
  * @param Api - The API object
@@ -33,9 +33,29 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
         try {
             var Fetch = require('axios')
-            Fetch.get(link, { responseType: "stream" }).then(data => { 
-                postImage(api, ctx.userID, { file: data.data }).then(data => {
-                    if (data.error) throw new Error({ error: data.error, des: data.error.errorDescription });
+            Fetch.get(link, { 
+                responseType: "arraybuffer",
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+                    'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                    'Referer': 'https://www.facebook.com/',
+                    'Sec-Fetch-Dest': 'image',
+                    'Sec-Fetch-Mode': 'no-cors',
+                    'Sec-Fetch-Site': 'cross-site'
+                }
+            }).then(data => { 
+                const imageBuffer = Buffer.from(data.data);
+                const stream = require("stream");
+                const bufferStream = new stream.PassThrough();
+                bufferStream.end(imageBuffer);
+                // @ts-ignore
+                bufferStream.path = "avatar.jpg";
+                
+                postImage(api, ctx.userID, { "f_id": ctx.userID, "file": bufferStream }).then(data => {
+                    if (!data || data.error || (data.payload && data.payload.error)) {
+                        return callback(data || { error: "Upload failed" });
+                    }
                     var form = {
                         av: ctx.userID,
                             fb_api_req_friendly_name: "ProfileCometProfilePictureSetMutation",
@@ -58,28 +78,26 @@ module.exports = function(defaultFuncs, api, ctx) {
                                 skip_cropping: true,
                                 actor_id: ctx.userID,
                                 client_mutation_id: Math.round(Math.random() * 19).toString()
-                                },
-                            isPage: false,
-                            isProfile: true,
-                            scale: 3,
+                                }
                         })
                     };
                     defaultFuncs
                         .post("https://www.facebook.com/api/graphql/", ctx.jar, form)
                         .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
                         .then(function(resData) {
-                            if (resData.error) throw resData;
-                            else return callback(null,true)
+                            if (resData.errors || resData.error) return callback(resData.errors || resData.error);
+                            return callback(null, true);
                         })
                         .catch(function(err) {
-                        return callback(err);
-                    });
-                })
-            })  
+                            return callback(err);
+                        });
+                }).catch(err => callback(err));
+            }).catch(err => callback(err));
         }
         catch (e) {
-            throw e;
+            callback(e);
         }
         return returnPromise;
     };
+
 };
